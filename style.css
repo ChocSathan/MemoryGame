@@ -1,7 +1,8 @@
 body {
-    background-color: #333333;
+    background-color: #121212;
     color: #ffffff;
     margin: 0;
+    text-align: center;
 }
 
 #board {
@@ -13,7 +14,7 @@ body {
     height: 80vh;
 }
 
-.header {
+#header {
     padding: 10px;
     text-align: center;
 }
@@ -24,7 +25,9 @@ body {
 
 table {
     margin: 0 auto;
+    margin-top: 50px;
     border-collapse: collapse;
+    border: none;
 }
 
 td {
@@ -38,6 +41,25 @@ td {
 }
 
 .card {
-    background-color: #444444;
-    color: #ffffff;
+    width: 87px;
+    height: auto;
+    margin: 0 auto;
+}
+
+#game-grid {
+    display: grid;
+    gap: 10px;
+    margin: 0 auto;
+    margin-top: 50px;
+    width: fit-content;
+}
+
+.card-container {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
 }
