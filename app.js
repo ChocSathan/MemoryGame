@@ -9,8 +9,6 @@ function startGame() {
 
     const header = document.getElementById("header");
     header.classList.add("hidden");
-    const scoreboard = document.getElementById("scoreboard");
-    scoreboard.classList.add("hidden");
     const game = document.getElementById("game");
     game.classList.remove("hidden");
     
@@ -81,45 +79,52 @@ function generateTable(cardCount) {
     gameGrid.innerHTML = ""; // Clear previous grid
 
     for (let i = 1; i <= cardCount; i++) {
+        const cardContainer = document.createElement("div");
+        cardContainer.className = "card-container";
+        cardContainer.id = `card${i}`;
+        cardContainer.onclick = () => revealCard(i);
+
         const card = document.createElement("div");
-        card.className = "card-container";
-        card.id = `card${i}`;
-        card.onclick = () => revealCard(i);
-        card.innerHTML = `<img class="card" src="assets/img/back.png" alt="Card ${i}"></img>`;
-        gameGrid.appendChild(card);
+        card.className = "card";
+
+        const front = document.createElement("div");
+        front.className = "front";
+        front.innerHTML = `<img src="assets/img/back.png" alt="Card ${i}">`;
+
+        const back = document.createElement("div");
+        back.className = "back";
+        back.innerHTML = `<img src="assets/img/cards/${searchPairs(i, pairs)}.png" alt="Card ${i}">`;
+
+        card.appendChild(front);
+        card.appendChild(back);
+        cardContainer.appendChild(card);
+        gameGrid.appendChild(cardContainer);
     }
 }
 
 function revealCard(cardIndex) {
-    const card = document.getElementById(`card${cardIndex}`);
+    const cardContainer = document.getElementById(`card${cardIndex}`);
 
-    if (card.classList.contains("revealed")) {
+    if (cardContainer.classList.contains("revealed")) {
         return;
     }
-    card.classList.add("revealed");
+    cardContainer.classList.add("revealed");
+
     if (typeof cardIndex === "undefined") {
         console.error("Invalid cardIndex: undefined");
         return;
     }
 
-    if (!card) {
+    if (!cardContainer) {
         console.error(`Card with ID card ${cardIndex} not found.`);
         return;
     }
+
     const pairIndex = searchPairs(cardIndex, window.pairs);
 
     const coups = document.getElementById("coups");
     coups.innerHTML = parseInt(coups.innerHTML) + 1;
 
-    const img = new Image();
-    img.src = `assets/img/cards/${pairIndex}.png`;
-    img.onload = () => {
-        card.innerHTML = `<img class="card" src="assets/img/cards/${pairIndex}.png" alt="Card ${cardIndex}"></img>`;
-    }
-    img.onerror = () => {
-        card.innerHTML = `<div class="card">Paire n°${pairIndex}</div>`;
-    }
-    
     checkPairs(cardIndex, pairIndex);
 }
 
@@ -129,13 +134,12 @@ function hideCard(cardIndex) {
         return;
     }
 
-    const card = document.getElementById(`card${cardIndex}`);
-    if (!card) {
+    const cardContainer = document.getElementById(`card${cardIndex}`);
+    if (!cardContainer) {
         console.error(`Card with ID card${cardIndex} not found.`);
         return;
     }
-    card.classList.remove("revealed");
-    card.innerHTML = '<img class="card" src="assets/img/back.png" alt="Card ${cardIndex}"></img>';
+    cardContainer.classList.remove("revealed");
 }
 
 function searchPairs(cardIndex, pairs) {
@@ -206,9 +210,7 @@ function quitGame() {
     game.classList.add("hidden");
     const menu = document.getElementById("popupMenu");
     menu.classList.add("hidden");
-    const scoreboard = document.getElementById("scoreboard");
-    scoreboard.classList.remove("hidden");
-
+    
     const gameGrid = document.getElementById("game-grid");
     gameGrid.innerHTML = ""; 
     window.firstCardIndex = undefined;
@@ -259,12 +261,9 @@ async function gameWon() {
     menuName = document.getElementById("menuName");
     menuName.innerHTML = "Bravo ! Vous avez gagné !";
 
-    //Ask for the name
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await new Promise(resolve => setTimeout(resolve, 1000));
     const name = prompt("Entrez votre nom :");
 
-    
-    //Envoyer le score au serveur
     const coups = parseInt(document.getElementById("coups").innerHTML);
     const timeMax = parseInt(document.getElementById("timeAsked").value);
     const timeRemaining = parseInt(document.getElementById("time").innerHTML);
@@ -279,8 +278,6 @@ async function gameWon() {
         finalScore: parseInt(Math.max(0, 1000 * (cardNumber / coups) * (cardNumber / time)))
     };
 
-    console.log("Sending score:", score); // Debugging: Log the payload
-
     fetch("http://localhost:3000/save_score.php", {
         method: "POST",
         headers: {
@@ -292,11 +289,11 @@ async function gameWon() {
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        return response.text(); // Use text() to handle invalid JSON
+        return response.text();
     })
     .then(text => {
         try {
-            const data = JSON.parse(text); // Attempt to parse JSON
+            const data = JSON.parse(text); 
             console.log("Server response:", data);
             if (data.status !== "success") {
                 console.error("Error from server:", data.message);

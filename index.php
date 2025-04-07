@@ -9,7 +9,7 @@ require 'db_connect.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memory Game</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="assets/img/back.png" type="image/x-icon">
+    <link rel="icon" href="assets/img/icon.png" type="image/x-icon">
 </head>
 
 <body>
@@ -20,6 +20,7 @@ require 'db_connect.php';
         <label for="timeAsked">Temps :</label>
         <input type="number" id="timeAsked" name="timeAsked" min="1" max="999" value="35"><br>
         <button id="start" onclick="startGame()">Start Game</button>
+        <button id="historic" onclick="showHistoric()">Historique des Joueurs</button>
     </div>
     <div id="scoreboard">
         <?php
@@ -40,10 +41,10 @@ require 'db_connect.php';
     <div class="hidden" id="game">
         <div class="" id="nbcoups">
                 <h2>Nombre de coups: <span id="coups">-1</span></h2>
-            </div>
-            <div class="" id="timer">
-                <h2>Temps restant: <span id="time">-1</span></h2>
-            </div>
+        </div>
+        <div class="" id="timer">
+            <h2>Temps restant: <span id="time">-1</span></h2>
+        </div>
         <div class="" id="board">
             <div style="padding: 5px;"></div>
             <div id="game-grid" class="game-grid"></div>
@@ -57,5 +58,4 @@ require 'db_connect.php';
 
 </body>
 <script src="app.js"></script>
-
 </html>

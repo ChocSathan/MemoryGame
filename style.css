@@ -1,8 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+.montserrat-100 {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 100;
+    font-style: normal;
+}
+
 body {
     background-color: #121212;
     color: #ffffff;
     margin: 0;
     text-align: center;
+    font-family: 'Montserrat';
 }
 
 #board {
@@ -23,27 +33,13 @@ body {
     display: none;
 }
 
-table {
-    margin: 0 auto;
-    margin-top: 50px;
-    border-collapse: collapse;
-    border: none;
-}
-
-td {
-    width: 100px;
-    height: 100px;
-    border: 1px solid #ffffff;
-    text-align: center;
-    vertical-align: middle;
-    font-size: 24px;
-    cursor: pointer;
-}
-
 .card {
-    width: 87px;
-    height: auto;
+    aspect-ratio: 620 / 880; 
+    width: 70px; 
+    height: auto; 
     margin: 0 auto;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
 }
 
 #game-grid {
@@ -55,12 +51,40 @@ td {
 }
 
 .card-container {
-    width: 100px;
-    height: 100px;
+    aspect-ratio: 620 / 880; 
+    width: 80px; 
+    height: auto; 
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px;
+    perspective: 1000px;
+    padding: 6px;
+}
+
+.card-container.revealed .card {
+    transform: rotateY(180deg);
+}
+
+.card img {
+    width: 100%; 
+    height: auto; 
+    max-height: 100%;
+    backface-visibility: hidden; 
+}
+
+.card .front {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+.card .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
 }
 
 .card-container img {
@@ -106,4 +130,16 @@ input[type="number"] {
     font-size: 16px;
     margin: 5px;
     text-align: center;
+}
+
+#scoreboard {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: #181818;
+    border-radius: 10px;
+    padding: 20px;
+    padding-top: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
 }
