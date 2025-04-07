@@ -4,7 +4,6 @@ require 'db_connect.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,21 +16,21 @@ require 'db_connect.php';
     <div id="header">
         <h1>Jeu de mémoire</h1>
         <label for="card-number">Nombre de paires:</label>
-        <input type="number" id="card-number" name="card-number" min="2" max="15" value="2"><br>
+        <input type="number" id="card-number" name="card-number" min="2" max="15" value="5"><br>
         <label for="timeAsked">Temps :</label>
-        <input type="number" id="timeAsked" name="timeAsked" min="1" max="999" value="80"><br>
+        <input type="number" id="timeAsked" name="timeAsked" min="1" max="999" value="35"><br>
         <button id="start" onclick="startGame()">Start Game</button>
     </div>
     <div id="scoreboard">
         <?php
         echo "<h2>Meilleurs scores</h2>";
         try {
-            $stmt = $conn->prepare("SELECT username, finalScore FROM SCORES ORDER BY finalScore DESC LIMIT 10");
+            $stmt = $conn->prepare("SELECT username, MAX(finalScore) AS maxScore FROM SCORES GROUP BY username ORDER BY maxScore DESC LIMIT 10");
             $stmt->execute();
             $scores = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             foreach ($scores as $score) {
-                echo "<p>" . htmlspecialchars($score['username']) . " : " . htmlspecialchars($score['finalScore']) . "</p>";
+                echo "<p>" . htmlspecialchars($score['username']) . " : " . htmlspecialchars($score['maxScore']) . "</p>";
             }
         } catch (PDOException $e) {
             echo "Erreur : " . $e->getMessage();

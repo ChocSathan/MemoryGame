@@ -245,7 +245,7 @@ function continueGame() {
     resumeTimer();
 }
 
-function gameWon() {
+async function gameWon() {
     pauseTimer();
 
     document.querySelectorAll(".card-container").forEach(card => card.onclick = null);
@@ -260,8 +260,10 @@ function gameWon() {
     menuName.innerHTML = "Bravo ! Vous avez gagné !";
 
     //Ask for the name
+    await new Promise(resolve => setTimeout(resolve, 100));
     const name = prompt("Entrez votre nom :");
 
+    
     //Envoyer le score au serveur
     const coups = parseInt(document.getElementById("coups").innerHTML);
     const timeMax = parseInt(document.getElementById("timeAsked").value);
