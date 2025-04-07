@@ -76,7 +76,7 @@ function generateTable(cardCount) {
     gameGrid.style.display = "grid";
     gameGrid.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
     gameGrid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
-    gameGrid.innerHTML = ""; // Clear previous grid
+    gameGrid.innerHTML = "";
 
     for (let i = 1; i <= cardCount; i++) {
         const cardContainer = document.createElement("div");
