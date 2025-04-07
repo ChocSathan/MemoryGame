@@ -131,6 +131,31 @@ input[type="number"] {
     margin: 5px;
     text-align: center;
 }
+input[type="number"]:focus {
+    outline: none;
+    border-color: #ffffff;
+}
+input[type="number"]::placeholder {
+    color: #ffffff;
+}
+
+input[type="text"] {
+    width: 200px;
+    padding: 5px;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    background-color: #252525;
+    color: #ffffff;
+    font-size: 16px;
+    margin: 5px;
+}
+input[type="text"]:focus {
+    outline: none;
+    border-color: #ffffff;
+}
+input[type="text"]::placeholder {
+    color: #ffffff;
+}
 
 #scoreboard {
     position: fixed;
@@ -143,3 +168,29 @@ input[type="number"] {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     z-index: 1000;
 }
+
+table {
+    margin: 20px auto; /* Center the table horizontally */
+    padding-top: 20px; /* Add padding to the top */
+    border-collapse: collapse;
+    width: 70%; /* Shrink the table width */
+    z-index: 2000; /* Ensure the table appears above the scoreboard */
+    position: relative; /* Required for z-index to take effect */
+}
+
+table th, table td {
+    border: 1px solid #ffffff;
+    padding: 10px;
+    text-align: center;
+}
+
+table th {
+    background-color: #252525;
+    color: #ffffff;
+}
+
+table td {
+    background-color: #181818;
+    color: #ffffff;
+}
+

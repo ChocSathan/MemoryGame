@@ -320,6 +320,52 @@ function gameLost() {
     menuName.innerHTML = "Dommage ! Vous avez perdu !";
 }
 
+function showHistoric() {
+    const historicBoard = document.getElementById("historic-board");
+    historicBoard.classList.remove("hidden");
+    const header = document.getElementById("header");
+    header.classList.add("hidden");
+}
+
+function closeHistoric() {
+    const historicBoard = document.getElementById("historic-board");
+    historicBoard.classList.add("hidden");
+    const header = document.getElementById("header");
+    header.classList.remove("hidden");
+}
+
+function searchPlayer() {
+    const searchInput = document.getElementById("search").value.trim();
+    const historicContent = document.getElementById("historic-content");
+
+    fetch("http://localhost:3000/search_player.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ username: searchInput })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.status === "success" && data.records && data.records.length > 0) {
+            historicContent.innerHTML = data.table; // Use the table from the server response
+        } else if (data.status === "success") {
+            historicContent.innerHTML = "<p>Aucun résultat trouvé.</p>";
+        } else {
+            historicContent.innerHTML = `<p>${data.message}</p>`;
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        historicContent.innerHTML = `<p>Erreur lors de la recherche.</p>`;
+    });
+}
+
 addEventListener("keypress", (event) => {
     if (event.key === "p") {
         const game = document.getElementById("game");
@@ -334,3 +380,4 @@ addEventListener("keypress", (event) => {
         }
     }
 })
+
