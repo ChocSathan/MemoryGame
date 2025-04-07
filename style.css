@@ -60,6 +60,50 @@ td {
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
     padding: 10px;
+}
+
+.card-container img {
+    cursor: pointer;
+}
+
+#popupMenu {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #121212;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+button {
+    background-color: #252525;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px;
+}
+button:hover {
+    background-color: #3f3f3f;
+}
+button:focus {
+    outline: none;
+}
+
+input[type="number"] {
+    width: 50px;
+    padding: 5px;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    background-color: #252525;
+    color: #ffffff;
+    font-size: 16px;
+    margin: 5px;
+    text-align: center;
 }
