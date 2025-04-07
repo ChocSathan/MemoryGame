@@ -60,6 +60,10 @@ body {
     perspective: 1000px;
     padding: 6px;
 }
+.card-container:hover {
+    transition: width 0.3s, height 0.3s;
+    transform: scale(1.05);
+}
 
 .card-container.revealed .card {
     transform: rotateY(180deg);
